@@ -5,7 +5,7 @@
 ### packages
 written in javascript express framework
 
-ORM bookshelf
+ORM bookshelf & knex
 
 ### three layered architecture
 
