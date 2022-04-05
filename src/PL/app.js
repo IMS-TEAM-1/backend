@@ -1,12 +1,17 @@
 const express = require( "express" )
 const userManager = require( "../BLL/users.js" )
-const userRepo = require( "../DAL/users.js" )
 
 const app = express()
 
 app.use("/", function(req, res){
-    userManager.helloWorld()
-    res.json("test")
+    userManager.getAllUsers(function(data){
+        res.json(data)
+    })
+})
+app.use("/users", function(req, res){
+    userManager.getAllUsers(function(data){
+        res.json(data)
+    })
 })
 
 app.listen(8080, function(){

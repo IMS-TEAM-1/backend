@@ -22,7 +22,7 @@ const users = [
     }
 ]
 function getAllUsers(callback){
-    callback([], users)
+    callback(users)
 }
 function helloWorld(){
     console.log("hello world")
