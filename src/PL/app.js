@@ -1,13 +1,13 @@
-const express = require( "express" )
-const userManager = require( "../BLL/users.js" )
-const userRepo = require( "../DAL/users.js" )
+const express           = require("express")
+const userManager       = require("../BLL/users.js")
+const usersRouter       = require("./routes/users-router.js")
+const standardRouter    = require("./routes/standard-router.js")
 
 const app = express()
 
-app.use("/", function(req, res){
-    userManager.helloWorld()
-    res.json("test")
-})
+app.use("/users", usersRouter(userManager))
+app.use("/", standardRouter())
+
 
 app.listen(8080, function(){
     console.log("express app listening on port 8080")
