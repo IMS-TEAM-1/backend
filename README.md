@@ -1,5 +1,5 @@
 # backend
-start the app by running `node src/PL/app.js` in the backend folder
+start the app by running `docker-compose build && docker-compose up -d` in the backend folder
 
 ## architecture choices
 
