@@ -1,4 +1,5 @@
 # backend
+start the app by running `node src/PL/app.js` in the backend folder
 
 ## architecture choices
 

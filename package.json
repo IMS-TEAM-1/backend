@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/IMS-TEAM-1/backend/issues"
   },
-  "homepage": "https://github.com/IMS-TEAM-1/backend#readme"
+  "homepage": "https://github.com/IMS-TEAM-1/backend#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
 }
