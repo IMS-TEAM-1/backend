@@ -1,12 +1,8 @@
-const userRepo = require( "../DAL/users.js" )
+const usersRepo = require( "../DAL/users.js" )
 
 function getAllUsers(callback){
-    userRepo.getAllUsers(callback)
-}
-function helloWorld(){
-    userRepo.helloWorld()
+    usersRepo.getAllUsers(callback)
 }
 module.exports = {
-    getAllUsers,
-    helloWorld
+    getAllUsers
 }

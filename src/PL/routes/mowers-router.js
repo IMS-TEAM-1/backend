@@ -1,10 +1,10 @@
 const express = require("express")
 
-module.exports = function(usersManager) {
+module.exports = function(mowersManager) {
     const router = express.Router()
 
     router.get("/", function(req, res){
-        usersManager.getAllUsers(function(data){
+        mowersManager.getAllMowers(function(data){
             res.json(data)
         })
     })

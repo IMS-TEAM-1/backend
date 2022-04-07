@@ -1,29 +1,29 @@
-const users = [
+const mowers = [
     {
         id: "1",
         name: "foo",
-        age: "bar"
+        type: "bar"
     }, {
         id: "2",
         name: "foo",
-        age: "bar"
+        type: "bar"
     }, {
         id: "3",
         name: "foo",
-        age: "bar"
+        type: "bar"
     }, {
         id: "4",
         name: "foo",
-        age: "bar"
+        type: "bar"
     }, {
         id: "5",
         name: "foo",
-        age: "bar"
+        type: "bar"
     }
 ]
-function getAllUsers(callback){
-    callback(users)
+function getAllMowers(callback){
+    callback(mowers)
 }
 module.exports = {
-    getAllUsers
+    getAllMowers
 }
