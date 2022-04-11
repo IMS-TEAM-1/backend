@@ -15,8 +15,9 @@ services:
     build: "./db"
     ports:
       - 3306:3306
-    env_file:
-      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dev
     networks:
       - db-network
     volumes:

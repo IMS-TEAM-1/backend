@@ -1,8 +1,13 @@
-FROM node:14.15.4
-EXPOSE 8080
-WORKDIR /
-COPY package*.json ./
-RUN npm install
-COPY src src
-CMD npm run start
+FROM node:15.6
 
+EXPOSE 8080
+
+WORKDIR /web-app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY src src
+
+CMD npm run dev
