@@ -5,7 +5,7 @@ services:
     ports: 
       - 8080:8080
     volumes:
-      - ./src/:/src/
+      - ./web-app/src/:/web-app/src/
     env_file: .env
     networks:
       - db-network
