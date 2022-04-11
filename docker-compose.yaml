@@ -3,14 +3,28 @@ services:
   backend:
     build: "./web-app"
     ports: 
-    - 8080:8080
+      - 8080:8080
     volumes:
-    - ./src/:/src/
+      - ./src/:/src/
+    env_file: .env
+    networks:
+      - db-network
     depends_on:
       - db
   db:
     build: "./db"
     ports:
-    - 3306:3306
+      - 3306:3306
     env_file:
       - .env
+    networks:
+      - db-network
+    volumes:
+      - data:/var/lib/mysql
+      
+networks:
+  db-network:
+    driver: bridge
+
+volumes:
+  data:
