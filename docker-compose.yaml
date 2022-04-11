@@ -1,8 +1,16 @@
 version: "3.8"
 services:
   backend:
-    build: "./"
+    build: "./web-app"
     ports: 
     - 8080:8080
     volumes:
     - ./src/:/src/
+    depends_on:
+      - db
+  db:
+    build: "./db"
+    ports:
+    - 3306:3306
+    env_file:
+      - .env

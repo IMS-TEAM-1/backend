@@ -1,0 +1,4 @@
+CREATE TABLE test(
+    id IN USIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50)
+)
