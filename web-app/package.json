@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/PL/app.js",
     "dev": "nodemon src/PL/app.js -L",
-    "knex": "KNEX_ENV=1 $(npm bin)/knex --knexfile ./src/database/knexfile.js \"$@\"",
-    "knex:win": "knex --knexfile ./src/database/knexfile.js"
+    "knex": "KNEX_ENV=1 $(npm bin)/knex --knexfile /web-app/src/database/knexfile.js \"$@\"",
+    "knex:win": "knex --knexfile /web-app/src/database/knexfile.js"
   },
   "repository": {
     "type": "git",
