@@ -8,6 +8,23 @@ written in javascript express framework
 
 ORM bookshelf & knex
 
+## Operations
+{ip-address}/users - GET request that fetches all users
+
+{ip-address}/users/{id} - GET request a specific user based on ID
+
+{ip-address}/users/{id} - PUT request to create a users
+
+{ip-address}/users/{id} - DELETE specific user
+
+{ip-address}/mowers - GET all mowers
+
+{ip-address}/mowers/{id} - GET specific mower
+
+{ip-address}/mowers/{id} - PUT mower with ID
+
+{ip-address}/mowers/{id} - DELETE specific mower
+
 ### three layered architecture
 
 #### Data access layer
