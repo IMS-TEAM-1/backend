@@ -8,12 +8,14 @@ written in javascript express framework
 
 ORM bookshelf & knex
 
-## Operations
+### Operations
 {ip-address}/users - GET request that fetches all users
 
 {ip-address}/users/{id} - GET request a specific user based on ID
 
-{ip-address}/users/{id} - PUT request to create a users
+{ip-address}/users/{id} - PUT update a user
+
+{ip-address}/users/{id} - POST create user
 
 {ip-address}/users/{id} - DELETE specific user
 
@@ -21,7 +23,9 @@ ORM bookshelf & knex
 
 {ip-address}/mowers/{id} - GET specific mower
 
-{ip-address}/mowers/{id} - PUT mower with ID
+{ip-address}/mowers/{id} - PUT update mower
+
+{ip-address}/mowers/{id} - POST create mower
 
 {ip-address}/mowers/{id} - DELETE specific mower
 
