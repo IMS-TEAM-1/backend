@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express           = require("express")
 
 const userManager       = require("../BLL/users.js")
@@ -13,8 +14,9 @@ app.use("/users", usersRouter(userManager))
 app.use("/mowers", mowersRouter(mowersManager))
 app.use("/", standardRouter())
 
+const port = process.env.PORT || 8080;
 
-app.listen(8080, function(){
-    console.log("express app listening on port 8080")
+app.listen(port, function(){
+    console.log("express app listening on port", port)
 })
 
