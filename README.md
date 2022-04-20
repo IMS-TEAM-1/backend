@@ -1,33 +1,31 @@
 # backend
+
+First, we need to create the .env file needed for mysql. Copy the `.env.example` file, rename it `.env` and save. The content shall all be correct
+
 start the app by running `docker-compose build && docker-compose up -d` in the backend folder
+
+We are having dependency issues as of now, if you encounter them then run `npm install --save bookshelf --legacy-peer-deps` Working on a fix...
+
+If you are on windows the docker.sh script will not work, instead alter the Dockerfile CMD line to look like this:
+
+```Dockerfile
+CMD npm run knex migrate:latest &&\
+    npm run knex seed:run &&\
+    npm run start
+```
 
 ## architecture choices
 
-### packages
-written in javascript express framework
+### tech-stack
 
-ORM bookshelf & knex
+- written in javascript express framework
 
-### Operations
-{ip-address}/users - GET request that fetches all users
+- ORM bookshelf & knex
 
-{ip-address}/users/{id} - GET request a specific user based on ID
+- MySQL database
 
-{ip-address}/users/{id} - PUT update a user
+- Exposes endpoints via REST-architecture.
 
-{ip-address}/users/{id} - POST create user
-
-{ip-address}/users/{id} - DELETE specific user
-
-{ip-address}/mowers - GET all mowers
-
-{ip-address}/mowers/{id} - GET specific mower
-
-{ip-address}/mowers/{id} - PUT update mower
-
-{ip-address}/mowers/{id} - POST create mower
-
-{ip-address}/mowers/{id} - DELETE specific mower
 
 ### three layered architecture
 
