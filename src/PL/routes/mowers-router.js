@@ -1,4 +1,5 @@
 const express = require("express")
+const { route } = require("express/lib/application")
 
 module.exports = function(mowersManager) {
     const router = express.Router()
@@ -13,5 +14,13 @@ module.exports = function(mowersManager) {
         res.status(response)
         res.json()
     })
+
+    route.get("/:id/location", async function(req, res){
+        const mowerId = req.params.id
+        const response =  await mowersManager.getMowerLocation(mowerId)
+        res.status(response)
+        res.json()
+    })
+
     return router
 }

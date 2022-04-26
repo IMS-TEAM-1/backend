@@ -9,7 +9,12 @@ async function createMower(data){
 
     return await mowersRepo.createMower(data) 
 }
+
+async function getMowerLocation(){
+    return await mowersRepo.getMowerLocation()
+}
 module.exports = {
     getAllMowers,
-    createMower
+    createMower,
+    getMowerLocation
 }
