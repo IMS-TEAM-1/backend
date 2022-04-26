@@ -1,8 +1,18 @@
 const Mower = require('../database/models/Mower');
 
-async function getAllMowers(callback){
-    callback(await Mower.find({}))
+async function getAllMowers(){
+    return await Mower.find({})
+}
+async function createMower(data){
+    try{
+        await Mower.create(data)
+        return 200
+    } catch(err){
+        return(500)
+    }
+    
 }
 module.exports = {
-    getAllMowers
+    getAllMowers,
+    createMower
 }

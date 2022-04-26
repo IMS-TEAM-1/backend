@@ -1,8 +1,12 @@
 const mowersRepo = require( "../DAL/mowers.js" )
 
-function getAllMowers(callback){
-    mowersRepo.getAllMowers(callback)
+async function getAllMowers(){
+    return await mowersRepo.getAllMowers()
+}
+async function createMower(data){
+    return await mowersRepo.createMower()
 }
 module.exports = {
-    getAllMowers
+    getAllMowers,
+    createMower
 }

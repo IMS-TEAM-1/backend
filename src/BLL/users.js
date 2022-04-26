@@ -1,7 +1,7 @@
 const usersRepo = require( "../DAL/users.js" )
 
-function getAllUsers(callback){
-    usersRepo.getAllUsers(callback)
+async function getAllUsers(){
+    return await usersRepo.getAllUsers()
 }
 module.exports = {
     getAllUsers
