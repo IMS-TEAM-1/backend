@@ -10,6 +10,8 @@ module.exports = function(mowersManager) {
 
     router.post("/", async function(req, res){
         const response = await mowersManager.createMower(req.body)
+        res.status(response)
+        res.json()
     })
     return router
 }

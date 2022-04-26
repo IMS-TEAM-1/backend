@@ -10,6 +10,11 @@ const standardRouter    = require("./routes/standard-router.js")
 
 const app = express()
 
+// configurations
+app.use(express.json())
+app.use(express.urlencoded())
+
+// routes
 app.use("/users", usersRouter(userManager))
 app.use("/mowers", mowersRouter(mowersManager))
 app.use("/", standardRouter())

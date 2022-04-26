@@ -8,6 +8,7 @@ async function createMower(data){
         await Mower.create(data)
         return 200
     } catch(err){
+        console.log(err)
         return(500)
     }
     

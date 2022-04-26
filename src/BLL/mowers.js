@@ -4,7 +4,10 @@ async function getAllMowers(){
     return await mowersRepo.getAllMowers()
 }
 async function createMower(data){
-    return await mowersRepo.createMower()
+    //validate the data before sending to database
+    if(!data.name) return 400 // name is requried
+
+    return await mowersRepo.createMower(data) 
 }
 module.exports = {
     getAllMowers,

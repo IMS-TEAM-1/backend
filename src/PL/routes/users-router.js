@@ -7,5 +7,12 @@ module.exports = function(usersManager) {
         const response = await usersManager.getAllUsers()
         res.json(response)  
     })
+
+    router.post("/", async function(req, res){
+        console.log('pl', req.body)
+        const response = await usersManager.createUser(req.body)
+        res.status(response)
+        res.json()
+    })
     return router
 }
