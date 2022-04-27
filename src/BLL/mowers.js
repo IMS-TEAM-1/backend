@@ -9,7 +9,17 @@ async function getAllMowers(){
         console.log(err)
         return 500
     }
-    
+}
+
+async function getMowerById(id){
+
+    try{
+        return await mowersRepo.getMowerById(id)
+    }
+    catch(err){
+        console.log(err)
+        return 500
+    }
 }
 
 async function createMower(data){
@@ -26,22 +36,71 @@ async function createMower(data){
      
 }
 
-async function getMowerLocation(mowerId){
+async function getMowerLocations(mowerId){
 
     if(!mowerId) return 400
 
     try{
-        return await mowersRepo.getMowerLocation(mowerId)
+        return await mowersRepo.getMowerLocations(mowerId)
+    }
+    catch(err){
+        console.log(err)
+        return 500
+    } 
+}
+
+async function createMowerLocation(data, mowerId){
+
+    if(!mowerId) return 400
+    if(!data.x) return 400
+    if(!data.y) return 400
+
+    data.mower_id = mowerId
+
+    try{
+        await mowersRepo.createMowerLocation(data)
+        return 200
+    }
+    catch(err){
+        console.log(err)
+        return 500
+    } 
+}
+
+async function getMowerImages(mowerId){
+
+    if(!mowerId) return 400
+
+    try{
+        return await mowersRepo.getMowerImages(mowerId)
     }
     catch(err){
         console.log(err)
         return 500
     }
-    
+}
+
+async function createMowerImage(data, mowerId){
+
+    if(!mowerId) return 400
+    if(!data.image) return 400
+
+    try{
+        await mowersRepo.createMowerImage(data, mowerId)
+        return 200
+    } 
+    catch(err) {
+        console.log(err)
+        return 500
+    }
 }
 
 module.exports = {
     getAllMowers,
+    getMowerById,
     createMower,
-    getMowerLocation
+    getMowerLocations,
+    createMowerLocation,
+    getMowerImages,
+    createMowerImage
 }
