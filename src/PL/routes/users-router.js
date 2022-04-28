@@ -8,15 +8,16 @@ module.exports = function(usersManager) {
 
         const response = await usersManager.getAllUsers()
 
-        res.json(response)  
+        res.status(response.status)
+        res.json(response.content)  
     })
 
     router.post("/", async function(req, res){
 
         const response = await usersManager.createUser(req.body)
 
-        res.status(response)
-        res.json()
+        res.status(response.status)
+        res.json(response.content) 
     })
 
     return router

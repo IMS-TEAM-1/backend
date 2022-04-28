@@ -17,6 +17,11 @@ async function createMower(data){
     await Mower.create(data)
 }
 
+async function updateMower(data, id){
+
+    return await Mower.update({mower_id:id}, data)
+}
+
 async function getMowerLocations(id){
 
     return await MowerLocation.find({mower_id:id})    
@@ -47,6 +52,7 @@ module.exports = {
     getAllMowers,
     getMowerById,
     createMower,
+    updateMower,
     getMowerLocations,
     createMowerLocation,
     getMowerImages,

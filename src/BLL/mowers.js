@@ -1,3 +1,4 @@
+const { response } = require("express")
 const mowersRepo = require( "../DAL/mowers.js" )
 
 async function getAllMowers(){
@@ -36,6 +37,19 @@ async function createMower(data){
      
 }
 
+async function updateMower(data, mowerId){
+    
+    if(!data) return 400
+
+    try{
+        await mowersRepo.updateMower(data, mowerId)
+    }
+    catch(err) {
+        console.log(err)
+        return 500
+    }
+}
+
 async function getMowerLocations(mowerId){
 
     if(!mowerId) return 400
@@ -51,54 +65,70 @@ async function getMowerLocations(mowerId){
 
 async function createMowerLocation(data, mowerId){
 
-    if(!mowerId) return 400
-    if(!data.x) return 400
-    if(!data.y) return 400
+    const response = {}
+
+    if(!mowerId || !data.x || !data.y ){
+        response.status = 400
+        return response
+    }
 
     data.mower_id = mowerId
-
+    
     try{
         await mowersRepo.createMowerLocation(data)
-        return 200
+        response.status = 200
     }
     catch(err){
         console.log(err)
-        return 500
-    } 
+        response.status = 500
+    }
+
+    return response
 }
 
 async function getMowerImages(mowerId){
 
-    if(!mowerId) return 400
+    const response = {}
+
+    if(!mowerId){
+        response.status = 400
+        return response
+    }
 
     try{
-        return await mowersRepo.getMowerImages(mowerId)
+        response.content = await mowersRepo.getMowerImages(mowerId)
     }
     catch(err){
         console.log(err)
-        return 500
+        response.status = 500
     }
+
+    return response
 }
 
 async function createMowerImage(data, mowerId){
 
-    if(!mowerId) return 400
-    if(!data.image) return 400
+    if(!mowerId || !data.image ){
+        response.status = 400
+        return response
+    }
 
     try{
         await mowersRepo.createMowerImage(data, mowerId)
-        return 200
+        response.status = 400
     } 
     catch(err) {
         console.log(err)
-        return 500
+        response.status = 400
     }
+    return response
 }
 
 module.exports = {
     getAllMowers,
     getMowerById,
     createMower,
+    updateMower,
     getMowerLocations,
     createMowerLocation,
     getMowerImages,

@@ -2,28 +2,36 @@ const usersRepo = require( "../DAL/users.js" )
 
 async function getAllUsers(){
 
+    const response = {}
+
     try{
-        return await usersRepo.getAllUsers()
+        response.content = await usersRepo.getAllUsers()
     }
     catch(err){
         console.log(err)
-        return 500
+        response.status = 500
     }
+
+    return response
 }
 
 async function createUser(data){
     
-    if(!data.username) return 400 // usernamename is requried
-    if(!data.password) return 400 // password is requried
+    const response = {}
+
+    if(!data.username || !data.password){
+        response.status = 400
+    }
 
     try{
-        return await usersRepo.createUser(data)
+        response.content =  await usersRepo.createUser(data)
     }
     catch(err){
         console.log(err)
-        return 500
+        response.status = 500
     }
      
+    return response
 }
 
 module.exports = {
