@@ -9,7 +9,7 @@ module.exports = function(mowersManager) {
 
         const response = await mowersManager.getAllMowers()
 
-        res.status(response.status)
+        res.status(response.status ?? 200)
         res.json(response.content)
     })
 
@@ -17,7 +17,7 @@ module.exports = function(mowersManager) {
 
         const response = await mowersManager.createMower(req.body)
 
-        res.status(response.status)
+        res.status(response.status ?? 200)
         res.json(response.content)
     })
 
@@ -27,7 +27,7 @@ module.exports = function(mowersManager) {
 
         const response = await mowersManager.updateMower(req.body, mowerId)
 
-        res.status(response.status)
+        res.status(response.status ?? 200)
         res.json(response.content)
     })
 
@@ -37,7 +37,17 @@ module.exports = function(mowersManager) {
 
         const response =  await mowersManager.getMowerLocation(mowerId)
 
-        res.status(response.status)
+        res.status(response.status ?? 200)
+        res.json(response.content)
+    })
+
+    router.get("/:id/images", async function(req, res){
+
+        const mowerId = req.params.id
+
+        const response =  await mowersManager.getMowerImages(mowerId)
+
+        res.status(response.status ?? 200)
         res.json(response.content)
     })
 
