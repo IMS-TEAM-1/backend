@@ -37,7 +37,7 @@ module.exports = function(mowersManager) {
 
         const response =  await mowersManager.getMowerLocations(mowerId)
 
-        res.status(response.status)
+        res.status(response.status ?? 200)
         res.json(response.content)
     })
 

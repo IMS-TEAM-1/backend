@@ -87,17 +87,22 @@ async function getMowerLocations(mowerId){
     return response
 }
 
-async function getMowerLocations(mowerId, locationId){
+async function getMowerLocation(mowerId, locationId){
 
-    if(!mowerId || !locationId) return 400
+    const response = {}
+
+    if(!mowerId || !locationId){
+        response.status = 400
+    }
 
     try{
-        return await mowersRepo.getMowerLocation(mowerId, locationId)
+        response.content = await mowersRepo.getMowerLocation(mowerId, locationId)
     }
     catch(err){
         console.log(err)
-        return 500
-    } 
+        response.status = 500
+    }
+    return response
 }
 
 async function createMowerLocation(data, mowerId){
@@ -129,6 +134,12 @@ async function getMowerImages(mowerId){
 
     if(!mowerId){
         response.status = 400
+        return response
+    }
+
+    const mower = await mowersRepo.getMowerById(mowerId);
+    if(!mower){
+        response.status = 404
         return response
     }
 
@@ -167,6 +178,7 @@ module.exports = {
     createMower,
     updateMower,
     getMowerLocations,
+    getMowerLocation,
     createMowerLocation,
     getMowerImages,
     createMowerImage

@@ -24,12 +24,12 @@ async function updateMower(data, id){
 
 async function getMowerLocations(id){
 
-    return await MowerLocation.find({mower_id:id})    
+    return await MowerLocation.find({ mower_id:id }, ['images'])
 }
 
 async function getMowerLocation(mowerId, locationId){
 
-    return await MowerLocation.find({ id: locationId, mower_id: mowerId });
+    return await MowerLocation.find({ id: locationId, mower_id: mowerId }, ['images']);
 }
 
 async function createMowerLocation(data){
@@ -37,16 +37,10 @@ async function createMowerLocation(data){
     return await MowerLocation.create(data)
 }
 
-async function getMowerImages(id){
-    /**
-     * Maybe remake the database so that we find images per mower_id, 
-     * and then mower_location foreign key exists to fetch where the image was taken?
-     * This means the code would look like this:
-     * 
-     * return await MowerLocationImage.find({mower_id: id})
-     */
-
-    return 404
+function getMowerImages(id){
+    return MowerLocationImage
+        .find({}, [{ mowerLocation: query => query.where({ mower_id: id }) }])
+        .filter(imageLocation => imageLocation.mowerLocation?.id);
 }
 
 async function createMowerImage(data, mowerId){
@@ -59,6 +53,7 @@ module.exports = {
     createMower,
     updateMower,
     getMowerLocations,
+    getMowerLocation,
     createMowerLocation,
     getMowerImages,
     createMowerImage
