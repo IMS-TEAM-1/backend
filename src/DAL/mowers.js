@@ -27,6 +27,11 @@ async function getMowerLocations(id){
     return await MowerLocation.find({mower_id:id})    
 }
 
+async function getMowerLocation(mowerId, locationId){
+
+    return await MowerLocation.find({ id: locationId, mower_id: mowerId });
+}
+
 async function createMowerLocation(data){
 
     return await MowerLocation.create(data)

@@ -87,6 +87,19 @@ async function getMowerLocations(mowerId){
     return response
 }
 
+async function getMowerLocations(mowerId, locationId){
+
+    if(!mowerId || !locationId) return 400
+
+    try{
+        return await mowersRepo.getMowerLocation(mowerId, locationId)
+    }
+    catch(err){
+        console.log(err)
+        return 500
+    } 
+}
+
 async function createMowerLocation(data, mowerId){
 
     const response = {}

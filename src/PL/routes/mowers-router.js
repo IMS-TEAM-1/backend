@@ -31,11 +31,21 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
-    router.get("/:id/location", async function(req, res){
+    router.get("/:id/locations", async function(req, res){
 
         const mowerId = req.params.id
 
-        const response =  await mowersManager.getMowerLocation(mowerId)
+        const response =  await mowersManager.getMowerLocations(mowerId)
+
+        res.status(response.status)
+        res.json(response.content)
+    })
+
+    router.get("/:mowerId/locations/:locationId", async function(req, res){
+
+        const { mowerId, locationId } = req.params
+
+        const response =  await mowersManager.getMowerLocation(mowerId, locationId)
 
         res.status(response.status ?? 200)
         res.json(response.content)
