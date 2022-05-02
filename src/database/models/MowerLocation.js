@@ -1,29 +1,18 @@
 const bookshelf = require('./knex.js');
-const Mower = require('./Mower');
-const MowerLocationImage = require('./MowerLocationImage');
 
-const { Model } = bookshelf;
-
-class MowerLocation extends Model {
-  get tableName() {
-    return 'mower_location';
-  }
-  get hasTimestamps() {
-    return ['created_at'];
-  }
-  get requireFetch() {
-    return false;
-  }
+const MowerLocation = bookshelf.model('MowerLocation', {
+  tableName: 'mower_location',
+  hasTimestamps: ['created_at'],
+  requireFetch: false,
 
   mower() {
-    return this.belongsTo(Mower);
-  }
-
+    return this.belongsTo('Mower');
+  },
   images() {
-    return this.hasMany(MowerLocationImage);
+    return this.hasMany('MowerLocationImage');
   }
-
-  static findOne (data, withRelated) {
+}, {
+  findOne (data, withRelated) {
     if (Array.isArray(data)) {
       const query = new MowerLocation();
       data.forEach(row => {
@@ -35,9 +24,9 @@ class MowerLocation extends Model {
     return MowerLocation.where(data)
       .fetch({ withRelated })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static find (data, withRelated) {
+  find (data, withRelated) {
     if (Array.isArray(data)) {
       const query = new MowerLocation();
       data.forEach(row => {
@@ -49,14 +38,14 @@ class MowerLocation extends Model {
     return MowerLocation.where(data)
       .fetchAll({ withRelated })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static create (data, trx = null) {
+  create (data, trx = null) {
     return new MowerLocation().save(data, { transacting: trx })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static update (where, data, trx = null) {
+  update (where, data, trx = null) {
     if (Array.isArray(where)) {
       const query = new MowerLocation();
       where.forEach(row => {
@@ -68,9 +57,9 @@ class MowerLocation extends Model {
     return MowerLocation.where(where)
       .save(data, { patch: true, transacting: trx })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static remove (data) {
+  remove (data) {
     if (Array.isArray(data)) {
       const query = new MowerLocation();
       data.forEach(row => {
@@ -83,6 +72,6 @@ class MowerLocation extends Model {
       .destroy()
       .then(el => el?.toJSON());
   }
-}
+});
 
 module.exports = MowerLocation;
