@@ -4,7 +4,7 @@ exports.up = function(knex) {
         table.increments();
         table.string('name').notNullable();
         table.text('token');
-        table.boolean('is_on');
+        table.enu('state', ['STANDBY', 'MANUAL', 'AUTONOMOUS']).notNullable().defaultTo('STANDBY');
         table.timestamp('created_at').defaultTo(knex.fn.now());
         table.timestamp('updated_at').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
     });
