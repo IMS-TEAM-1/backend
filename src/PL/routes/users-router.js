@@ -8,7 +8,7 @@ module.exports = function(usersManager) {
 
         const response = await usersManager.getAllUsers()
 
-        res.status(response.status)
+        res.status(response.status ?? 200)
         res.json(response.content)  
     })
 
@@ -16,7 +16,7 @@ module.exports = function(usersManager) {
 
         const response = await usersManager.createUser(req.body)
 
-        res.status(response.status)
+        res.status(response.status ?? 200)
         res.json(response.content) 
     })
 
@@ -26,7 +26,7 @@ module.exports = function(usersManager) {
 
         const response = await usersManager.getUserById(id)
 
-        res.status(response.status)
+        res.status(response.status ?? 200)
         res.json(response.content)  
     })
 

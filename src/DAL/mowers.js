@@ -37,7 +37,7 @@ async function createMowerLocation(data){
     return await MowerLocation.create(data)
 }
 
-function getMowerImages(id){
+async function getMowerImages(id){
     return await MowerLocationImage
         .find({}, [{ mowerLocation: query => query.where({ mower_id: id }) }])
         .filter(imageLocation => imageLocation.mowerLocation?.id);

@@ -21,6 +21,16 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    router.get("/:id", async function(req, res){
+
+        const mowerId = req.params.id
+
+        const response = await mowersManager.getMowerById(mowerId)
+
+        res.status(response.status ?? 200)
+        res.json(response.content)
+    })
+
     router.post("/:id", async function(req, res){
 
         const mowerId = req.params.id
