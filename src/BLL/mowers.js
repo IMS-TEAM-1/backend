@@ -1,5 +1,10 @@
-const { response } = require("express")
 const mowersRepo = require( "../DAL/mowers.js" )
+
+/**
+ * Every function returns an @Object
+ * @status status code: 200,404,500
+ * @content return value or error message
+ */
 
 async function getAllMowers(){
 
@@ -11,6 +16,7 @@ async function getAllMowers(){
     catch(err){
         console.log(err)
         response.status = 500
+        response.content = 'internal server error'
     }
 
     return response
@@ -26,6 +32,7 @@ async function getMowerById(id){
     catch(err){
         console.log(err)
         response.status = 500
+        response.content = 'internal server error'
     }
 
     return response
@@ -33,8 +40,13 @@ async function getMowerById(id){
 
 async function createMower(data){
 
+    const response = {}
+
     if(!data.name){
         response.status = 400
+        response.content = 'bad request: missing required fields'
+
+        return response
     }
 
     try{ 
@@ -43,46 +55,54 @@ async function createMower(data){
     catch(err){
         console.log(err)
         response.status = 500
+        response.content = 'internal server error'
     }
 
     return response
      
 }
 
-async function updateMower(data, mowerId){
+async function updateMower(data, id){
     
     const response = {}
 
-    if(!data){
+    if(!data || !id){
         response.status = 400
+        response.content = 'bad request: missing required fields'
+
+        return response
     }
 
     try{
-        await mowersRepo.updateMower(data, mowerId)
-        response.status = 200
+        await mowersRepo.updateMower(data, id)
     }
     catch(err) {
         console.log(err)
         response.status = 500
+        response.content = 'internal server error'
     }
 
     return response
 }
 
-async function getMowerLocations(mowerId){
+async function getMowerLocations(id){
 
     const response = {}
 
-    if(!mowerId){
+    if(!id){
         response.status = 400
+        response.content = 'bad request: missing required fields'
+
+        return response
     }
 
     try{
-        response.content = await mowersRepo.getMowerLocations(mowerId)
+        response.content = await mowersRepo.getMowerLocations(id)
     }
     catch(err){
         console.log(err)
         response.status = 500
+        response.content = 'internal server error'
     } 
     return response
 }
@@ -105,35 +125,39 @@ async function getMowerLocation(mowerId, locationId){
     return response
 }
 
-async function createMowerLocation(data, mowerId){
+async function createMowerLocation(data, id){
 
     const response = {}
 
-    if(!mowerId || !data.x || !data.y ){
+    if(!id || !data.x || !data.y){
         response.status = 400
+        response.content = 'bad request: missing required fields'
+
         return response
     }
 
-    data.mower_id = mowerId
+    data.mower_id = id
     
     try{
         await mowersRepo.createMowerLocation(data)
-        response.status = 200
     }
     catch(err){
         console.log(err)
         response.status = 500
+        response.content = 'internal server error'
     }
 
     return response
 }
 
-async function getMowerImages(mowerId){
+async function getMowerImages(id){
 
     const response = {}
 
-    if(!mowerId){
+    if(!id){
         response.status = 400
+        response.content = 'bad request: missing required fields'
+
         return response
     }
 
@@ -144,30 +168,35 @@ async function getMowerImages(mowerId){
     }
 
     try{
-        response.content = await mowersRepo.getMowerImages(mowerId)
+        response.content = await mowersRepo.getMowerImages(id)
     }
     catch(err){
         console.log(err)
         response.status = 500
+        response.content = 'internal server error'
     }
 
     return response
 }
 
-async function createMowerImage(data, mowerId){
+async function createMowerImage(data, id){
 
-    if(!mowerId || !data.image ){
+    const response = {}
+
+    if(!id || !data.image ){
         response.status = 400
+        response.content = 'bad request: missing required fields'
+
         return response
     }
 
     try{
-        await mowersRepo.createMowerImage(data, mowerId)
-        response.status = 400
+        await mowersRepo.createMowerImage(data, id)
     } 
     catch(err) {
         console.log(err)
-        response.status = 400
+        response.status = 500
+        response.content = 'internal server error'
     }
     return response
 }

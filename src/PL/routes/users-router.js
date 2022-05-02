@@ -20,5 +20,15 @@ module.exports = function(usersManager) {
         res.json(response.content) 
     })
 
+    router.get("/:id", async function(req, res){
+
+        const id = req.params.id
+
+        const response = await usersManager.getUserById(id)
+
+        res.status(response.status)
+        res.json(response.content)  
+    })
+
     return router
 }

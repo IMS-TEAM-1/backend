@@ -6,20 +6,25 @@ async function getAllUsers(){
 
 }
 
+async function getUserById(id){
+
+    return await User.where({id}).fetch()
+
+}
+
+async function updateUser(data, id){
+
+    return await User.update({id}, data)
+}
+
 async function createUser(data){
 
-    try{
-        await User.create(data)
-        return 200
-    } 
-    catch(err){
-        console.log(err)
-        return(500)
-    }
+    return await User.create(data)
     
 }
 
 module.exports = {
     getAllUsers,
+    getUserById,
     createUser
 }
