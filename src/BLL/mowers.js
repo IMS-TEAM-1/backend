@@ -161,7 +161,7 @@ async function getMowerImages(id){
         return response
     }
 
-    const mower = await mowersRepo.getMowerById(mowerId);
+    const mower = await mowersRepo.getMowerById(id);
     if(!mower){
         response.status = 404
         return response
