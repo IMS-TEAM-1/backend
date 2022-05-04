@@ -61,6 +61,17 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    router.post("/:mowerId/locations", async function(req, res){
+
+        const { mowerId } = req.params
+        const data = req.body
+
+        const response =  await mowersManager.createMowerLocation(data, mowerId)
+
+        res.status(response.status ?? 200)
+        res.json(response.content)
+    })
+
     router.get("/:id/images", async function(req, res){
 
         const mowerId = req.params.id

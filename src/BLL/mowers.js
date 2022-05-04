@@ -129,7 +129,7 @@ async function createMowerLocation(data, id){
 
     const response = {}
 
-    if(!id || !data.x || !data.y){
+    if(!id || isNaN(data.x) || isNaN(data.y)){
         response.status = 400
         response.content = 'bad request: missing required fields'
 
