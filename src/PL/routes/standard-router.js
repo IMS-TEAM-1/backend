@@ -8,7 +8,7 @@ module.exports = function() {
     router.get("/", async function(req, res){
 
         const {privateKey} = JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY);
-        const {clientEmail} = JSON.parse(process.env.GOOGLE_VISION_EMAIL);
+        const {clientEmail} = JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY);
         const client = new vision.ImageAnnotatorClient({
             credentials: {
                 private_key: privateKey,
