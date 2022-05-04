@@ -3,6 +3,7 @@ const vision = require("@google-cloud/vision")
 const { config } = require("dotenv")
 
 module.exports = function() {
+    
     const router = express.Router()
 
     router.get("/", async function(req, res){
@@ -26,5 +27,6 @@ module.exports = function() {
 
         res.json(labels)
     })
+
     return router
 }

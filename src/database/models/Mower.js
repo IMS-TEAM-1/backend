@@ -1,29 +1,18 @@
 const bookshelf = require('./knex.js');
-const User = require('./User');
-const MowerLocation = require('./MowerLocation');
 
-const { Model } = bookshelf;
-
-class Mower extends Model {
-  get tableName() {
-    return 'mower';
-  }
-  get hasTimestamps() {
-    return ['created_at', 'updated_at'];
-  }
-  get requireFetch() {
-    return false;
-  }
+const Mower = bookshelf.model('Mower', {
+  tableName: 'mower',
+  hasTimestamps: ['created_at', 'updated_at'],
+  requireFetch: false,
 
   users() {
-    return this.belongsToMany(User);
-  }
-
+    return this.belongsToMany('User');
+  },
   locations() {
-    return this.hasMany(MowerLocation);
-  }
-
-  static findOne (data, withRelated) {
+    return this.hasMany('MowerLocation');
+  },
+}, {
+  findOne (data, withRelated) {
     if (Array.isArray(data)) {
       const query = new Mower();
       data.forEach(row => {
@@ -35,9 +24,9 @@ class Mower extends Model {
     return Mower.where(data)
       .fetch({ withRelated })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static find (data, withRelated) {
+  find (data, withRelated) {
     if (Array.isArray(data)) {
       const query = new Mower();
       data.forEach(row => {
@@ -49,14 +38,14 @@ class Mower extends Model {
     return Mower.where(data)
       .fetchAll({ withRelated })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static create (data, trx = null) {
+  create (data, trx = null) {
     return new Mower().save(data, { transacting: trx })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static update (where, data, trx = null) {
+  update (where, data, trx = null) {
     if (Array.isArray(where)) {
       const query = new Mower();
       where.forEach(row => {
@@ -68,9 +57,9 @@ class Mower extends Model {
     return Mower.where(where)
       .save(data, { patch: true, transacting: trx })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static remove (data) {
+  remove (data) {
     if (Array.isArray(data)) {
       const query = new Mower();
       data.forEach(row => {
@@ -83,6 +72,6 @@ class Mower extends Model {
       .destroy()
       .then(el => el?.toJSON());
   }
-}
+})
 
 module.exports = Mower;

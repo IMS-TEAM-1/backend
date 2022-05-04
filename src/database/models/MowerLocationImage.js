@@ -1,21 +1,14 @@
 const bookshelf = require('./knex.js');
-const MowerLocation = require('./MowerLocation');
 
-const { Model } = bookshelf;
+const MowerLocationImage = bookshelf.model('MowerLocationImage', {
+  tableName: 'mower_location_image',
+  requireFetch: false,
 
-class MowerLocationImage extends Model {
-  get tableName() {
-    return 'mower_location_image';
+  mowerLocation() {
+    return this.belongsTo('MowerLocation');
   }
-  get requireFetch() {
-    return false;
-  }
-
-  mower() {
-    return this.belongsTo(MowerLocation);
-  }
-
-  static findOne (data, withRelated) {
+}, {
+  findOne (data, withRelated) {
     if (Array.isArray(data)) {
       const query = new MowerLocationImage();
       data.forEach(row => {
@@ -27,9 +20,9 @@ class MowerLocationImage extends Model {
     return MowerLocationImage.where(data)
       .fetch({ withRelated })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static find (data, withRelated) {
+  find (data, withRelated) {
     if (Array.isArray(data)) {
       const query = new MowerLocationImage();
       data.forEach(row => {
@@ -41,14 +34,14 @@ class MowerLocationImage extends Model {
     return MowerLocationImage.where(data)
       .fetchAll({ withRelated })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static create (data, trx = null) {
+  create (data, trx = null) {
     return new MowerLocationImage().save(data, { transacting: trx })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static update (where, data, trx = null) {
+  update (where, data, trx = null) {
     if (Array.isArray(where)) {
       const query = new MowerLocationImage();
       where.forEach(row => {
@@ -60,9 +53,9 @@ class MowerLocationImage extends Model {
     return MowerLocationImage.where(where)
       .save(data, { patch: true, transacting: trx })
       .then(el => el?.toJSON());
-  }
+  },
 
-  static remove (data) {
+  remove (data) {
     if (Array.isArray(data)) {
       const query = new MowerLocationImage();
       data.forEach(row => {
@@ -75,6 +68,6 @@ class MowerLocationImage extends Model {
       .destroy()
       .then(el => el?.toJSON());
   }
-}
+});
 
 module.exports = MowerLocationImage;
