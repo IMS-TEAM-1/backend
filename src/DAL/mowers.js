@@ -44,7 +44,8 @@ async function getMowerImages(id){
 }
 
 async function createMowerImage(data, mowerId){
-    return 404
+    data.mower_id = mowerId
+    return await MowerLocationImage.create(data)
 }
 
 module.exports = {
