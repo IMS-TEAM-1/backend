@@ -179,12 +179,12 @@ async function getMowerImages(id){
     return response
 }
 
-async function createMowerImage(data, id){
+async function createMowerImage(data, mowerId){
 
     const response = {}
     console.log(data)
 
-    if(!id || !data.image || data.location ){
+    if(!mowerId || !data.image || !data.location ){
         response.status = 400
         response.content = 'bad request: missing required fields'
 
@@ -192,7 +192,7 @@ async function createMowerImage(data, id){
     }
 
     try{
-        const location = await createMowerLocation(data.location, id)
+        const location = await createMowerLocation(data.location, mowerId)
         console.log(location)
         
         response.content = await mowersRepo.createMowerImage(data.image, location.id)
