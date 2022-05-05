@@ -173,13 +173,9 @@ We need a body that contains both the image object and the location where it det
 
 ```json
 {
-    "location": {
         "x": 0,
-        "y": 0
-    },
-    "image":{
+        "y": 0,
         "image": "BASE64"
-    }
 }
 ```
 

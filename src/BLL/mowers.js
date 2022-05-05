@@ -180,22 +180,25 @@ async function getMowerImages(id){
 }
 
 async function createMowerImage(data, mowerId){
-
     const response = {}
     console.log(data)
 
-    if(!mowerId || !data.image || !data.location ){
+    if(!mowerId || !data.image || isNaN(data.x) || isNaN(data.y) ){
         response.status = 400
         response.content = 'bad request: missing required fields'
 
         return response
     }
 
+    const location = {x: data.x, y: data.y}
+
     try{
-        const {content} = await createMowerLocation(data.location, mowerId)
+        const {content} = await createMowerLocation(location, mowerId)
         console.log('created location', content)
         
         response.content = await mowersRepo.createMowerImage(data.image, content.id)
+        console.log('created image', content)
+
     } 
     catch(err) {
         console.log(err)
