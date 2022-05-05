@@ -139,7 +139,7 @@ async function createMowerLocation(data, id){
     data.mower_id = id
     
     try{
-        await mowersRepo.createMowerLocation(data)
+        response.content = await mowersRepo.createMowerLocation(data)
     }
     catch(err){
         console.log(err)
@@ -182,6 +182,7 @@ async function getMowerImages(id){
 async function createMowerImage(data, id){
 
     const response = {}
+    console.log(data)
 
     if(!id || !data.image || data.location ){
         response.status = 400
@@ -193,7 +194,7 @@ async function createMowerImage(data, id){
     try{
         const location = await mowersRepo.createMowerLocation(data.location)
         console.log(location)
-        // await mowersRepo.createMowerImage(data, id)
+        // response.content = await mowersRepo.createMowerImage(data, )
     } 
     catch(err) {
         console.log(err)
