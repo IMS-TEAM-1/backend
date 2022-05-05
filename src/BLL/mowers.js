@@ -192,10 +192,10 @@ async function createMowerImage(data, mowerId){
     }
 
     try{
-        const location = await createMowerLocation(data.location, mowerId)
-        console.log('created location', location)
+        const {content} = await createMowerLocation(data.location, mowerId)
+        console.log('created location', content)
         
-        response.content = await mowersRepo.createMowerImage(data.image, location.id)
+        response.content = await mowersRepo.createMowerImage(data.image, content.id)
     } 
     catch(err) {
         console.log(err)
