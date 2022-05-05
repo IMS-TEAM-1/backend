@@ -21,9 +21,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
-    router.get("/:id", async function(req, res){
+    router.get("/:mowerId", async function(req, res){
 
-        const mowerId = req.params.id
+        const { mowerId } = req.params
 
         const response = await mowersManager.getMowerById(mowerId)
 
@@ -31,9 +31,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
-    router.post("/:id", async function(req, res){
+    router.post("/:mowerId", async function(req, res){
 
-        const mowerId = req.params.id
+        const { mowerId } = req.params
 
         const response = await mowersManager.updateMower(req.body, mowerId)
 
@@ -41,9 +41,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
-    router.get("/:id/locations", async function(req, res){
+    router.get("/:mowerId/locations", async function(req, res){
 
-        const mowerId = req.params.id
+        const { mowerId } = req.params
 
         const response =  await mowersManager.getMowerLocations(mowerId)
 
@@ -72,9 +72,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
-    router.get("/:id/images", async function(req, res){
+    router.get("/:mowerId/images", async function(req, res){
 
-        const mowerId = req.params.id
+        const { mowerId } = req.params
 
         const response =  await mowersManager.getMowerImages(mowerId)
 
@@ -82,9 +82,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
-    router.post("/:id/images", async function(req, res){
+    router.post("/:mowerId/images", async function(req, res){
 
-        const mowerId = req.params.id
+        const { mowerId } = req.params
         const data = req.body
 
         const response =  await mowersManager.createMowerImage(data, mowerId)

@@ -83,7 +83,7 @@ Example of mower object
     "id": 37,
     "name": "mower-01",
     "token": null,
-    "is_on": null, // our on off button
+    "state": "STANDBY" || "MANUAL" || "AUTONOMOUS",
     "created_at": "2022-04-20T11:49:44.000Z",
     "updated_at": "2022-04-20T11:49:44.000Z"
 },
