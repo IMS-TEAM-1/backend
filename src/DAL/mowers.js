@@ -43,8 +43,8 @@ async function getMowerImages(id){
         .filter(imageLocation => imageLocation.mowerLocation?.id);
 }
 
-async function createMowerImage(data, mowerId){
-    data.mower_id = mowerId
+async function createMowerImage(data, mowerLocationId){
+    data.mower_location_id = mowerLocationId
     return await MowerLocationImage.create(data)
 }
 
