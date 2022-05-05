@@ -86,6 +86,7 @@ module.exports = function(mowersManager) {
 
         const { mowerId } = req.params
         const data = req.body
+        console.log(data)
 
         const response =  await mowersManager.createMowerImage(data, mowerId)
 
