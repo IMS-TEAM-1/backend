@@ -1,4 +1,5 @@
 const mowersRepo = require( "../DAL/mowers.js" )
+const vision = require("@google-cloud/vision")
 
 /**
  * Every function returns an @Object
@@ -183,6 +184,7 @@ async function createMowerImage(data, id){
 
     const response = {}
 
+    // validation
     if(!id || !data.image ){
         response.status = 400
         response.content = 'bad request: missing required fields'
@@ -190,6 +192,24 @@ async function createMowerImage(data, id){
         return response
     }
 
+    // get classication from google
+
+    const client = new vision.ImageAnnotatorClient({
+        credentials: JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY)
+    });
+
+    // Performs label detection on the image file
+    const [result] = await client.labelDetection(data.image)
+    const googleLabels = result;
+    console.log('Labels:');
+    labels.forEach(label => console.log(label.description));
+
+
+    data.classification = googleLabels.responses.labelAnnotations[0].description
+
+    data.mower_location_id = 0 //TODO
+
+    // save the image
     try{
         await mowersRepo.createMowerImage(data, id)
     } 
