@@ -10,5 +10,4 @@ RUN npm install
 RUN npm install knex -g
 COPY . .
 
-CMD npm run knex migrate:latest &&\
-    npm run dev
+CMD sh docker/docker.sh
