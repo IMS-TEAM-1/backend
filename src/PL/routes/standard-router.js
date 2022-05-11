@@ -7,7 +7,7 @@ module.exports = function() {
     const router = express.Router()
 
     router.get("/", async function(req, res){
-
+        /*
         const {privateKey} = JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY);
         const {clientEmail} = JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY);
         const client = new vision.ImageAnnotatorClient({
@@ -23,9 +23,9 @@ module.exports = function() {
         console.log('Labels:');
         labels.forEach(label => console.log(label.description));
 
-
-
         res.json(labels)
+        */
+       res.json("hello world")
     })
 
     return router
