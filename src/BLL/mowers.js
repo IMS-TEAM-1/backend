@@ -1,4 +1,5 @@
 const mowersRepo = require( "../DAL/mowers.js" )
+const vision = require("@google-cloud/vision")
 
 /**
  * Every function returns an @Object
@@ -192,6 +193,22 @@ async function createMowerImage(data, mowerId){
 
     const location = {x: data.x, y: data.y}
 
+    // get classication from google
+
+    const client = new vision.ImageAnnotatorClient({
+        credentials: JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY)
+    });
+
+    // Performs label detection on the image file
+    const [result] = await client.labelDetection(data.image)
+    const googleLabels = result;
+    console.log('Labels:');
+    labels.forEach(label => console.log(label.description));
+
+
+    data.classification = googleLabels.responses.labelAnnotations[0].description
+
+    // save the image
     try{
         const {content} = await createMowerLocation(location, mowerId)
         console.log('created location', content)
