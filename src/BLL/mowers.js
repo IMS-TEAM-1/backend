@@ -194,27 +194,54 @@ async function createMowerImage(data, mowerId){
     const location = {x: data.x, y: data.y}
 
     // get classication from google
+    try{
+        const client = new vision.ImageAnnotatorClient({
+            credentials: process.env.GOOGLE_VISION_PRIVATE_KEY
+        });
+    
+        const requestObj = `
+        {
+            "requests":[
+              {
+                "image":{
+                  "content": "${data.image}"
+                },
+                "features": [
+                  {
+                    "type":"LABEL_DETECTION",
+                    "maxResults":1
+                  }
+                ]
+              }
+            ]
+          }
+        `
+    
+        // Performs label detection on the image file
+        const [result] = await client.labelDetection(requestObj)
+        const labels = result;
+    
+        console.log('Labels:');
+        labels.forEach(label => console.log(label.description));
+    
+    
+        data.classification = labels.responses.labelAnnotations[0].description ?? null
 
-    const client = new vision.ImageAnnotatorClient({
-        credentials: process.env.GOOGLE_VISION_PRIVATE_KEY
-    });
-
-    // Performs label detection on the image file
-    const [result] = await client.labelDetection(data.image)
-    const labels = result;
-
-    console.log('Labels:');
-    labels.forEach(label => console.log(label.description));
-
-
-    data.classification = labels.responses.labelAnnotations[0].description ?? null
+    } catch(err){
+        console.log("Google classification error...")
+    }
 
     // save the image
     try{
         const {content} = await createMowerLocation(location, mowerId)
         console.log('created location', content)
+
+        const image = {
+            image: data.image,
+            classification: data.classification
+        }
         
-        response.content = await mowersRepo.createMowerImage(data.image, content.id)
+        response.content = await mowersRepo.createMowerImage(image, content.id)
         console.log('created image', content)
 
     } 
