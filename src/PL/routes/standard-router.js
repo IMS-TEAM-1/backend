@@ -1,6 +1,7 @@
 const express = require("express")
 const vision = require("@google-cloud/vision")
 const { config } = require("dotenv")
+const fs = require('fs')
 
 module.exports = function() {
     
@@ -8,21 +9,20 @@ module.exports = function() {
 
     router.get("/", async function(req, res){
 
-        const {privateKey} = JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY);
-        const {clientEmail} = JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY);
+        const buf = Buffer.from(process.env.B64_IMAGE, "base64");
         const client = new vision.ImageAnnotatorClient({
-            credentials: {
-                private_key: privateKey,
-                client_email: clientEmail,
-            }
+            credentials: JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY)
         });
+        
 
         // Performs label detection on the image file
-        const [result] = await client.labelDetection('https://produits.bienmanger.com/36700-0w470h470_Organic_Red_Onion_From_Italy.jpg')
+        const [result] = await client.labelDetection(buf)
         const labels = result.labelAnnotations;
         console.log('Labels:');
         labels.forEach(label => console.log(label.description));
 
+        console.log('\n')
+        console.log(labels.description)
 
 
         res.json(labels)
