@@ -130,7 +130,7 @@ async function createMowerLocation(data, id){
 
     const response = {}
 
-    if(!id || !data.x || !data.y){
+    if(!id || isNaN(data.x) || isNaN(data.y)){
         response.status = 400
         response.content = 'bad request: missing required fields'
 
@@ -140,7 +140,7 @@ async function createMowerLocation(data, id){
     data.mower_id = id
     
     try{
-        await mowersRepo.createMowerLocation(data)
+        response.content = await mowersRepo.createMowerLocation(data)
     }
     catch(err){
         console.log(err)
@@ -180,17 +180,18 @@ async function getMowerImages(id){
     return response
 }
 
-async function createMowerImage(data, id){
-
+async function createMowerImage(data, mowerId){
     const response = {}
+    console.log(data)
 
-    // validation
-    if(!id || !data.image ){
+    if(!mowerId || !data.image || isNaN(data.x) || isNaN(data.y) ){
         response.status = 400
         response.content = 'bad request: missing required fields'
 
         return response
     }
+
+    const location = {x: data.x, y: data.y}
 
     // get classication from google
     const buf = Buffer.from(data.image, "base64");

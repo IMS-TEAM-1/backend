@@ -9,7 +9,7 @@ module.exports = function(usersManager) {
         const response = await usersManager.getAllUsers()
 
         res.status(response.status ?? 200)
-        res.json(response.content)  
+        res.json(response.content)
     })
 
     router.post("/", async function(req, res){
