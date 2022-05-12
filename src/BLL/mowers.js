@@ -194,42 +194,18 @@ async function createMowerImage(data, mowerId){
     const location = {x: data.x, y: data.y}
 
     // get classication from google
-    try{
-        const client = new vision.ImageAnnotatorClient({
-            credentials: process.env.GOOGLE_VISION_PRIVATE_KEY
-        });
+    const buf = Buffer.from(data.image, "base64");
+    const client = new vision.ImageAnnotatorClient({
+        credentials: JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY)
+    });
     
-        const requestObj = `
-        {
-            "requests":[
-              {
-                "image":{
-                  "content": "${data.image}"
-                },
-                "features": [
-                  {
-                    "type":"LABEL_DETECTION",
-                    "maxResults":1
-                  }
-                ]
-              }
-            ]
-          }
-        `
-    
-        // Performs label detection on the image file
-        const [result] = await client.labelDetection(requestObj)
-        const labels = result;
-    
-        console.log('Labels:');
-        labels.forEach(label => console.log(label.description));
-    
-    
-        data.classification = labels.responses.labelAnnotations[0].description ?? null
 
-    } catch(err){
-        console.log("Google classification error...")
-    }
+    // Performs label detection on the image file
+    const [result] = await client.labelDetection(buf)
+    const labels = result.labelAnnotations;
+    console.log('Labels:');
+    labels.forEach(label => console.log(label.description));
+
 
     // save the image
     try{
@@ -238,7 +214,7 @@ async function createMowerImage(data, mowerId){
 
         const image = {
             image: data.image,
-            classification: data.classification
+            classification: labels[0].description
         }
         
         response.content = await mowersRepo.createMowerImage(image, content.id)
