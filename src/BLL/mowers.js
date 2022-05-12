@@ -193,25 +193,32 @@ async function createMowerImage(data, id){
     }
 
     // get classication from google
-
+    const buf = Buffer.from(data.image, "base64");
     const client = new vision.ImageAnnotatorClient({
         credentials: JSON.parse(process.env.GOOGLE_VISION_PRIVATE_KEY)
     });
+    
 
     // Performs label detection on the image file
-    const [result] = await client.labelDetection(data.image)
-    const googleLabels = result;
+    const [result] = await client.labelDetection(buf)
+    const labels = result.labelAnnotations;
     console.log('Labels:');
     labels.forEach(label => console.log(label.description));
 
 
-    data.classification = googleLabels.responses.labelAnnotations[0].description
-
-    data.mower_location_id = 0 //TODO
-
     // save the image
     try{
-        await mowersRepo.createMowerImage(data, id)
+        const {content} = await createMowerLocation(location, mowerId)
+        console.log('created location', content)
+
+        const image = {
+            image: data.image,
+            classification: labels[0].description
+        }
+        
+        response.content = await mowersRepo.createMowerImage(image, content.id)
+        console.log('created image', content)
+
     } 
     catch(err) {
         console.log(err)
