@@ -35,30 +35,99 @@ start the app by running `docker-compose build && docker-compose up -d` in the b
 
 
 
-## architecture choices
+# Software Design Description
 
-### tech-stack
+## Tech-stack
 
 - written in javascript express framework
 
 - ORM bookshelf & knex
 
-- MySQL database
+- MySQL (MariaDB) database
 
 - Exposes endpoints via REST-architecture.
 
+- Everything contained in Docker containers for easy startup
 
-### three layered architecture
 
-#### data access layer
+## Three layered architecture
 
-Communicates with the database.
-Not really needed in our case as we are using an ORM, but makes the code a bit cleaner in the business logic layer.
+The three layered architecture splits the main code base into three layers, each having a dedicated purpose.
+This increases modularity and SRP (single responsibility principle) and can make debugging easier as each layer can be treated as their own module for black bock testing.
 
-#### business logic layer
+### Data access layer
 
-Handles all the logic within the system, like error handling
+The layer that communicates with the database.
+Not really needed in our case as we are using an ORM, but makes the code a bit cleaner in the business logic layer, and enables us to create several layers for storing (like memory only for testing).
 
-#### presentation layer
+There exists one data repository file for each `BLL/manager` file
 
-Exposes our enpoints
+
+### Business logic layer
+
+The heart of our project, where all the logic is process.
+Handles all the logic within the system, like error handling, before forwarding it to the Data Access Layer for storing or to the Presentatin layer for communication with the user.
+
+There exists one manager file for each router file.
+
+
+### Presentation layer
+
+The presentation layer is the user interface and communication layer of our web application.
+This means it exposes our enpoints and handles serving data to and recieving data from the user.
+
+
+#### Routes
+
+Express handles routes by mounting functions to endpoints.
+Example below:
+
+```js
+// GET method route
+app.get('/', (req, res) => {
+  res.send('GET request to the homepage')
+})
+
+// POST method route
+app.post('/', (req, res) => {
+  res.send('POST request to the homepage')
+})
+```
+
+To avoid houndreds of lines of code in a single file for handling all endpoints, we create routes in the `/PL/routes` folder, export a express.router() function and mount it in the `app.js` file.
+Example below:
+
+```js
+// src/PL/routes/mowers.js
+
+const express = require("express")
+
+module.exports = function() {
+    
+  const router = express.Router()
+  router.get("/", async function(req, res){
+    ...
+    res.json(response.content)
+  })
+
+  return router
+}
+
+// src/PL/app.js
+
+const express = require("express")
+const mowersRouter = require("./routes/mowers-router.js")
+const app = express()
+
+// mount mowers router at /mowers
+app.use("/mowers", mowersRouter())
+
+```
+
+
+## Docker
+
+The whole backend is managed with two docker containers, one for the application itself and one for the database.
+This enables us to start the project with `docker compose build && docker compose up`, and the MySQL database starts up along side with the applicaton.
+
+The docker.sh script manages the startup and can be altered to insert sample data from the `/database/seeders` folder.
