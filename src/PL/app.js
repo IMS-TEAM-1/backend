@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express           = require("express")
 
+// import managers here and send them as objects to have most imports at the same place.
 const userManager       = require("../BLL/users.js")
 const mowersManager     = require("../BLL/mowers.js")
 

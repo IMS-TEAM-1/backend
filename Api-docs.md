@@ -1,5 +1,7 @@
 # Mower project API documentation
 
+We are only working with GET and POST.
+To update
 
 ## Example code
 
@@ -83,7 +85,7 @@ Example of mower object
     "id": 37,
     "name": "mower-01",
     "token": null,
-    "is_on": null, // our on off button
+    "state": "STANDBY" || "MANUAL" || "AUTONOMOUS",
     "created_at": "2022-04-20T11:49:44.000Z",
     "updated_at": "2022-04-20T11:49:44.000Z"
 },
@@ -95,13 +97,16 @@ Example of mower object
 
 No body required
 
+
 `{ip-address}/mowers/{id}` - GET specific mower
 
 No body required
 
-`{ip-address}/mowers/{id}` - PUT update mower
+
+`{ip-address}/mowers/{id}` - POST update mower
 
 Body with the key and value of the row you want to change
+
 
 `{ip-address}/mowers/{id}` - POST create mower
 
@@ -115,18 +120,63 @@ name is required when creating a mower
 
 `{ip-address}/mowers/{id}` - DELETE specific mower
 
+No body required
+
 `{ip-address}/mowers/{id}/location` - GET location of specific mower
 
-coming soon...
+It will contain an array of images if the exist, else an empty array.
 
-`{ip-address}/mowers/{id}/location` - PUT update location of specific mower
+Example of location object.
 
-coming soon...
+```json
+{
+  "id": 34,
+  "mower_id": 2,
+  "x": 0,
+  "y": 0,
+  "created_at": "2022-05-05T10:11:19.000Z",
+  "images": [
+      {
+          "id": 1,
+          "mower_location_id": 34,
+          "image": "base64",
+          "classification": null
+      }
+  ]
+}
+```
+
+`{ip-address}/mowers/{id}/location` - POST update location of specific mower
+
+Make a request with the key and value you want to change
+
 
 `{ip-address}/mowers/{id}/images` - GET collision images of specific mower
 
-coming soon...
+
+Example of image object
+
+```json
+{
+  "id": 1,
+  "mower_location_id": 34,
+  "image": "base64",
+  "classification": null
+}
+    
+```
+
 
 `{ip-address}/mowers/{id}/images` - POST post a new collision image of specific mower
 
-coming soon...
+We need a body that contains both the image object and the location where it detected the collision, as in the example below
+
+```json
+{
+        "x": 0,
+        "y": 0,
+        "image": "BASE64"
+}
+```
+
+the server will ask google for classification on the image before storing it.

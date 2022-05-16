@@ -38,13 +38,16 @@ async function createMowerLocation(data){
 }
 
 async function getMowerImages(id){
+
     return await MowerLocationImage
         .find({}, [{ mowerLocation: query => query.where({ mower_id: id }) }])
         .filter(imageLocation => imageLocation.mowerLocation?.id);
 }
 
-async function createMowerImage(data, mowerId){
-    return 404
+async function createMowerImage(data, mowerLocationId){
+    
+    data.mower_location_id = mowerLocationId
+    return await MowerLocationImage.create(data)
 }
 
 module.exports = {
