@@ -71,6 +71,21 @@ Handles all the logic within the system, like error handling, before forwarding 
 There exists one manager file for each router file.
 
 
+#### Google Vision API
+
+One main feature of the backend is to use the Google Classification API to get a classification for collision images uploaded by the mower.
+
+
+The logic can be found in the `src/BLL/mowers.js` file under the `createMowerImage` function.
+
+To first setup Google Vision API you need to create a developer account, get a `GOOGLE_VISION_PRIVATE_KEY` that we store in our enviromental file (.env) and then decode in our code. 
+
+The function takes in an image as Base64, converts it to a buffer and sends to Vision API for classification.
+The first results is taken as it is the results vision is the most certain is correct, at the cost of a generic description.
+A location is first created to bind the collison image to.
+The image along with its description is then stored in the database.
+
+
 ### Presentation layer
 
 The presentation layer is the user interface and communication layer of our web application.
@@ -131,3 +146,9 @@ The whole backend is managed with two docker containers, one for the application
 This enables us to start the project with `docker compose build && docker compose up`, and the MySQL database starts up along side with the applicaton.
 
 The docker.sh script manages the startup and can be altered to insert sample data from the `/database/seeders` folder.
+
+
+## Tests
+
+We have some tests scripts in the `/tests` folder.
+These are isolated black box testing scripts that run and expect a results, will pass if the results are good and will fail if the results are not what we expected.
