@@ -1,7 +1,4 @@
 const express = require("express")
-const vision = require("@google-cloud/vision")
-const { config } = require("dotenv")
-const fs = require('fs')
 
 module.exports = function() {
     

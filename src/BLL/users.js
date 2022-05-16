@@ -80,5 +80,6 @@ async function createUser(data){
 module.exports = {
     getAllUsers,
     getUserById,
-    createUser
+    createUser,
+    updateUser
 }

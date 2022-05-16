@@ -1,10 +1,13 @@
 const express = require("express")
-const { route } = require("express/lib/application")
 
+// import the mowersManager object as a parameter 
 module.exports = function(mowersManager) {
     
     const router = express.Router()
 
+    /**
+     * Get all mowers
+     */
     router.get("/", async function(req, res){
 
         const response = await mowersManager.getAllMowers()
@@ -13,6 +16,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    /**
+     * Create a new mower
+     */
     router.post("/", async function(req, res){
 
         const response = await mowersManager.createMower(req.body)
@@ -21,6 +27,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    /**
+     * Get a single mower by id
+     */
     router.get("/:mowerId", async function(req, res){
 
         const { mowerId } = req.params
@@ -31,6 +40,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    /**
+     * Update a single mower with given id
+     */
     router.post("/:mowerId", async function(req, res){
 
         const { mowerId } = req.params
@@ -41,6 +53,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    /**
+     * Get all mower locations belonging to a mower
+     */
     router.get("/:mowerId/locations", async function(req, res){
 
         const { mowerId } = req.params
@@ -51,6 +66,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    /**
+     * Get a single mower location belonging to a mower
+     */
     router.get("/:mowerId/locations/:locationId", async function(req, res){
 
         const { mowerId, locationId } = req.params
@@ -61,6 +79,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    /**
+     * Create a new mower location for a mower
+     */
     router.post("/:mowerId/locations", async function(req, res){
 
         const { mowerId } = req.params
@@ -72,6 +93,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    /**
+     * Get all collision images belongin to a mower
+     */
     router.get("/:mowerId/images", async function(req, res){
 
         const { mowerId } = req.params
@@ -82,6 +106,9 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    /**
+     * Create a new collision image belonging to a mower
+     */
     router.post("/:mowerId/images", async function(req, res){
 
         const { mowerId } = req.params
