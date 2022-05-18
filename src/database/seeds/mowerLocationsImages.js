@@ -5,7 +5,7 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('mower_location_image').insert([
         { mower_location: 1, image: 'base64:image:1' },
-        { mower_location: 2, image: 'base64:image:2' },
+        { mower_location: 3, image: 'base64:image:2' },
         { mower_location: 5, image: 'base64:image:3' },
       ]);
     });
