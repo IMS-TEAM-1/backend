@@ -23,6 +23,7 @@
   "dependencies": {
     "@google-cloud/vision": "^2.4.2",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
     "bookshelf": "^1.2.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
