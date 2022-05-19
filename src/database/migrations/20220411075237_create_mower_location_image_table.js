@@ -3,7 +3,7 @@ exports.up = function(knex) {
     return knex.schema.createTable('mower_location_image', function(table) {
         table.increments();
         table.integer('mower_location_id').unsigned().notNullable();
-        table.binary('image');
+        table.binary('image', 65536);
         table.string('classification');
 
         table.foreign('mower_location_id')
