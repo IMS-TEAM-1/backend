@@ -48,15 +48,17 @@ async function getMowerImages(id){
 async function createMowerImage(data, mowerLocationId){
     
     // store file as image on the server
-    const fileName = `../images/${data.classification}.jpg`
+    const fileName = 'out.jpg' // `../images/${data.classification}.jpg`
 
     var base64Data = data.image.replace(/^data:image\/png;base64,/, "");
 
-    fs.writeFile("out.jpg", base64Data, 'base64', function(err) {
-        console.log(err);
+    console.log("writing data to disk...")
+
+    fs.writeFile(fileName, data.image, 'base64', function(err) {
+        console.log('writefile error: ', err);
     });
 
-    return
+    console.log("done")
 
     data.image = fileName
     
