@@ -215,7 +215,7 @@ async function createMowerImage(data, mowerId){
     labels.forEach(label => console.log(label.description))
 
     // Take the first description as it has the highest probability, at the cost of generic description
-    const description = null
+    let description = null
     if(labels.length > 0) description = labels[0].description
 
     // save the image
