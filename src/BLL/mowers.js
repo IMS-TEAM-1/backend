@@ -224,7 +224,7 @@ async function createMowerImage(data, mowerId){
         console.log('created location', content)
 
         const image = {
-            image: buf,
+            image: data.image,
             classification: description
         }
         
