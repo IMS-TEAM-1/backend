@@ -66,12 +66,15 @@ function writeToDisk(base64Image, fileName){
 
             fs.writeFile(fileName, buf, (err) => {
                 if(err){
-                    console.log(err)
+                    console.log('error while writing data to disk...', err)
                     reject()
-                } else resolve()
+                } else {
+                    console.log(`done writing ${fileName} to disk...`)
+                    resolve()
+                }
             })
-        },2000)
-      })
+        },10000)
+    })
 }
 
 module.exports = {
