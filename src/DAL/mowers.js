@@ -1,6 +1,7 @@
 const Mower = require('../database/models/Mower');
 const MowerLocation = require('../database/models/MowerLocation');
 const MowerLocationImage = require('../database/models/MowerLocationImage');
+const fs = require('fs')
 
 async function getAllMowers(){
 
@@ -45,6 +46,17 @@ async function getMowerImages(id){
 }
 
 async function createMowerImage(data, mowerLocationId){
+    
+    // store file as image on the server
+    const fileName = `../../images/${data.classification}.jpg`
+    try{
+        fs.writeFile(fileName, data.image, function(err){
+            if(err) console.log(err)
+        })
+    } catch(err){
+        console.log("error while writing image to file")
+    }
+    data.image = fileName
     
     data.mower_location_id = mowerLocationId
     return await MowerLocationImage.create(data)

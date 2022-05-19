@@ -27,6 +27,7 @@
     "bookshelf": "^1.2.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "fs": "^0.0.1-security",
     "google-auth-library": "^8.0.2",
     "knex": "^0.21.12",
     "knex-migrate": "^1.7.4",
