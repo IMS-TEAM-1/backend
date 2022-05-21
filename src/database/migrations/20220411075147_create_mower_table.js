@@ -5,6 +5,7 @@ exports.up = function(knex) {
         table.string('name').notNullable();
         table.text('token');
         table.enu('state', ['STANDBY', 'MANUAL', 'AUTONOMOUS', 'DIAGNOSTIC']).notNullable().defaultTo('STANDBY');
+        table.enu('direction', ['RIGHT', 'LEFT', 'FORWARD', 'BACKWARD', 'STOP']).notNullable().defaultTo('STOP');
         table.timestamp('created_at').defaultTo(knex.fn.now());
         table.timestamp('updated_at').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
     });
