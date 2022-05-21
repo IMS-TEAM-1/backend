@@ -240,6 +240,29 @@ async function createMowerImage(data, mowerId){
     
     return response
 }
+/**
+ * Fetches the mower, extracts direction from it and sends it back.
+ * @param {Int} mowerId 
+ */
+async function getMowerDirection(mowerId){
+    
+    const response = {}
+
+    try{
+        const mower = await mowersRepo.getMowerById(mowerId)
+
+        // make sure we have a mower before extracting the direction
+        if(!mower) response.status = 204
+        else{
+            response.status = 200
+            response.content = mower.direction
+        }
+    }catch(err){
+        response.status = 500
+    }
+
+    return response
+}
 
 module.exports = {
     getAllMowers,
@@ -250,5 +273,6 @@ module.exports = {
     getMowerLocation,
     createMowerLocation,
     getMowerImages,
-    createMowerImage
+    createMowerImage,
+    getMowerDirection
 }
