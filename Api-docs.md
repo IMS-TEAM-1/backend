@@ -191,6 +191,6 @@ body shall only contain a direction parameter like the example below:
 
 ```json
 {
-    "direction":"LEFT || RIGHT || FORWARD || BACKWARDS || STOP"
+    "direction":"LEFT || RIGHT || FORWARD || BACKWARD || STOP"
 }
 ```
