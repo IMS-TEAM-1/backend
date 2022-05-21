@@ -1,6 +1,7 @@
 const Mower = require('../database/models/Mower');
 const MowerLocation = require('../database/models/MowerLocation');
 const MowerLocationImage = require('../database/models/MowerLocationImage');
+const fs = require('fs')
 
 async function getAllMowers(){
 
@@ -46,8 +47,34 @@ async function getMowerImages(id){
 
 async function createMowerImage(data, mowerLocationId){
     
+    // store file as image on the server
+    const filePath = `${data.classification}_${Date.now()}.jpg`
+
+    console.log("writing data to disk...")
+    await writeToDisk(data.image, filePath)    
+    
+    data.image = filePath
+    
     data.mower_location_id = mowerLocationId
     return await MowerLocationImage.create(data)
+}
+
+function writeToDisk(base64Image, fileName){
+    return new Promise(function(resolve,reject){
+        setTimeout(function(){
+            const buf = Buffer.from(base64Image, "base64");
+
+            fs.writeFile(fileName, buf, (err) => {
+                if(err){
+                    console.log('error while writing data to disk...', err)
+                    reject()
+                } else {
+                    console.log(`done writing ${fileName} to disk...`)
+                    resolve()
+                }
+            })
+        },10000)
+    })
 }
 
 module.exports = {
