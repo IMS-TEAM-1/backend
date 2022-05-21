@@ -125,7 +125,6 @@ module.exports = function(mowersManager) {
         const { mowerId } = req.params
 
         const response = await mowersManager.getMowerDirection(mowerId)
-        console.log('PL', response)
 
         res.status(response.status ?? 200)
         res.json(response.content)
@@ -135,6 +134,7 @@ module.exports = function(mowersManager) {
 
         const { mowerId } = req.params
         const data =  { direction: req.body.direction ?? 'STOP'}
+        console.log("Changing direction to "+req.body.direction)
 
         const response = await mowersManager.updateMower(data, mowerId)
 
