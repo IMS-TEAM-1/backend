@@ -122,7 +122,7 @@ name is required when creating a mower
 
 No body required
 
-`{ip-address}/mowers/{id}/location` - GET location of specific mower
+`{ip-address}/mowers/{id}/locations` - GET location of specific mower
 
 It will contain an array of images if the exist, else an empty array.
 
@@ -146,7 +146,7 @@ Example of location object.
 }
 ```
 
-`{ip-address}/mowers/{id}/location` - POST update location of specific mower
+`{ip-address}/mowers/{id}/locations` - POST update location of specific mower
 
 Make a request with the key and value you want to change
 
