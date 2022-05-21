@@ -48,12 +48,12 @@ async function getMowerImages(id){
 async function createMowerImage(data, mowerLocationId){
     
     // store file as image on the server
-    const fileName = 'out.jpg' // `../images/${data.classification}.jpg`
+    const filePath = `${data.classification}_${Date.now()}.jpg`
 
     console.log("writing data to disk...")
-    await writeToDisk(data.image, fileName)
+    await writeToDisk(data.image, filePath)    
     
-    data.image = fileName
+    data.image = filePath
     
     data.mower_location_id = mowerLocationId
     return await MowerLocationImage.create(data)

@@ -12,7 +12,6 @@ services:
       - 8080:8080
     volumes:
       - ./src/:/src/
-      - /usr/src/app/DAL/:/home/ubuntu/dump/
     networks:
       - ims-backend-network
     depends_on:
