@@ -125,6 +125,7 @@ module.exports = function(mowersManager) {
         const { mowerId } = req.params
 
         const response = await mowersManager.getMowerDirection(mowerId)
+        console.log('PL', response)
 
         res.status(response.status ?? 200)
         res.json(response.content)

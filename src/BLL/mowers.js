@@ -250,7 +250,7 @@ async function getMowerDirection(mowerId){
 
     try{
         const mower = await mowersRepo.getMowerById(mowerId)
-
+        console.log("BLL mower", mower)
         // make sure we have a mower before extracting the direction
         if(!mower) response.status = 204
         else{
