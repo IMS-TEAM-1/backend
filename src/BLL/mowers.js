@@ -29,6 +29,7 @@ async function getMowerById(id){
 
     try{
         response.content = await mowersRepo.getMowerById(id)
+        console.log("BLL mower", response.content)
     }
     catch(err){
         console.log(err)
