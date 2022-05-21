@@ -29,6 +29,7 @@ async function getMowerById(id){
 
     try{
         response.content = await mowersRepo.getMowerById(id)
+        console.log("BLL mower", response.content)
     }
     catch(err){
         console.log(err)
@@ -240,6 +241,29 @@ async function createMowerImage(data, mowerId){
     
     return response
 }
+/**
+ * Fetches the mower, extracts direction from it and sends it back.
+ * @param {Int} mowerId 
+ */
+async function getMowerDirection(mowerId){
+    
+    const response = {}
+
+    try{
+        const {attributes} = await mowersRepo.getMowerById(mowerId)
+        console.log("BLL mower", attributes)
+        // make sure we have a mower before extracting the direction
+        if(!attributes) response.status = 204
+        else{
+            response.status = 200
+            response.content = attributes.direction
+        }
+    }catch(err){
+        response.status = 500
+    }
+
+    return response
+}
 
 module.exports = {
     getAllMowers,
@@ -250,5 +274,6 @@ module.exports = {
     getMowerLocation,
     createMowerLocation,
     getMowerImages,
-    createMowerImage
+    createMowerImage,
+    getMowerDirection
 }

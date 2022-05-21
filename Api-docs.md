@@ -122,7 +122,7 @@ name is required when creating a mower
 
 No body required
 
-`{ip-address}/mowers/{id}/location` - GET location of specific mower
+`{ip-address}/mowers/{id}/locations` - GET location of specific mower
 
 It will contain an array of images if the exist, else an empty array.
 
@@ -146,7 +146,7 @@ Example of location object.
 }
 ```
 
-`{ip-address}/mowers/{id}/location` - POST update location of specific mower
+`{ip-address}/mowers/{id}/locations` - POST update location of specific mower
 
 Make a request with the key and value you want to change
 
@@ -173,10 +173,24 @@ We need a body that contains both the image object and the location where it det
 
 ```json
 {
-        "x": 0,
-        "y": 0,
-        "image": "BASE64"
+    "x": 0,
+    "y": 0,
+    "image": "BASE64"
 }
 ```
 
 the server will ask google for classification on the image before storing it.
+
+
+
+`{ip-address}/mowers/{id}/direction` - GET the direction of the mower in manual driving mode
+
+`{ip-address}/mowers/{id}/direction` - POST: update the direction of the mower in manual driving mode
+
+body shall only contain a direction parameter like the example below:
+
+```json
+{
+    "direction":"LEFT || RIGHT || FORWARD || BACKWARDS || STOP"
+}
+```
