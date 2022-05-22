@@ -1,7 +1,8 @@
 # Introduction
 
 This system is part of a three part system that shall immitate a Husqvarna autonomous mower.
-The two other parts are the mobile application and the mower itself
+The two other parts are the mobile application and the mower itself.
+This README will explain the main features of the web app, a workflow example, how to setup and a detailed software design description that contains requirements needed
 
 # Features
 
@@ -10,8 +11,16 @@ These can be accessed via the exposed enpoints.
 
 For documentation about the API enpoints, checkout [Api-docs.md](Api-docs.md)
 
+## Tech-stack
 
-# Workflow example
+- written in javascript express framework
+- ORM bookshelf & knex
+- MySQL (MariaDB) database
+- Exposes endpoints via REST-architecture.
+- Everything contained in Docker containers for easy startup
+
+
+## Workflow example
 
 - The application updates the state of the mower from `standby` to `autonomous`.
  
@@ -163,6 +172,16 @@ The image is then written to the file system of the server host machine.
 > When image data is written, the service shall perform an image classification via for example Google Vision API
 
 When a POST request to the image endpoint is called, the image gets sent to Google Vision API for classification before stored on the server.
+
+#### Google Vision API
+
+One main feature of the backend is to use the Google Classification API to get a classification for collision images uploaded by the mower.
+
+The logic can be found in the `src/BLL/mowers.js` file under the createMowerImage function.
+
+To first setup Google Vision API you need to create a developer account, get a `GOOGLE_VISION_PRIVATE_KEY` that we store in our enviromental file (.env) and then decode in our code.
+
+The function takes in an image as Base64, converts it to a buffer and sends to Vision API for classification. The first results is taken as it is the results vision is the most certain is correct, at the cost of a generic description. A location is first created to bind the collison image to. The image along with its description is then stored in the database.
 
 The first results is taken as it is the results vision is the most certain is correct, at the cost of a generic description.
 A location is first created to bind the collision image to.
