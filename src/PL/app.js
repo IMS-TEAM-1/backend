@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express           = require("express")
+const bodyParser        = require("body-parser")
 
 // import managers here and send them as objects to have most imports at the same place.
 const userManager       = require("../BLL/users.js")
@@ -12,8 +13,15 @@ const standardRouter    = require("./routes/standard-router.js")
 const app = express()
 
 // configurations
-app.use(express.json())
-app.use(express.urlencoded())
+app.use(bodyParser.json({
+    limit: '50mb'
+}));
+app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    parameterLimit: 100000,
+    extended: true 
+}));
+
 
 // routes
 app.use("/users", usersRouter(userManager))

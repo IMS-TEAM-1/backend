@@ -113,7 +113,6 @@ module.exports = function(mowersManager) {
 
         const { mowerId } = req.params
         const data = req.body
-        console.log('PL', data)
 
         const response =  await mowersManager.createMowerImage(data, mowerId)
 
@@ -121,5 +120,26 @@ module.exports = function(mowersManager) {
         res.json(response.content)
     })
 
+    router.get("/:mowerId/direction", async function(req, res){
+
+        const { mowerId } = req.params
+
+        const response = await mowersManager.getMowerDirection(mowerId)
+
+        res.status(response.status ?? 200)
+        res.json(response.content)
+    })
+
+    router.post("/:mowerId/direction", async function(req, res){
+
+        const { mowerId } = req.params
+        const data =  { direction: req.body.direction ?? 'STOP'}
+        console.log("Changing direction to "+req.body.direction)
+
+        const response = await mowersManager.updateMower(data, mowerId)
+
+        res.status(response.status ?? 200)
+        res.json(response.content)
+    })
     return router
 }

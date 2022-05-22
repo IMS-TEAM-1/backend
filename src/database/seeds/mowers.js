@@ -4,9 +4,9 @@ exports.seed = function(knex) {
       .then(function () {
         // Inserts seed entries
         return knex('mower').insert([
-          { name: 'mower-01'},
-          { name: 'mower-02'},
-          { name: 'mower-03'}
+          { name: 'The Fast and the Furious'},
+          { name: '2 Fast 2 Furious'},
+          { name: 'Terminator'}
         ]);
       });
   };

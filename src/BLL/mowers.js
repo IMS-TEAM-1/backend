@@ -29,6 +29,7 @@ async function getMowerById(id){
 
     try{
         response.content = await mowersRepo.getMowerById(id)
+        console.log("BLL mower", response.content)
     }
     catch(err){
         console.log(err)
@@ -212,15 +213,16 @@ async function createMowerImage(data, mowerId){
     const [result] = await client.labelDetection(buf)
     const labels = result.labelAnnotations
     console.log('Labels:')
-    labels.forEach(label => console.log(label.description))
+    labels.forEach(label => console.log('label', label.description))
 
     // Take the first description as it has the highest probability, at the cost of generic description
-    const description = labels[0].description
+    let description = null
+    if(labels.length > 0) description = labels[0].description
 
     // save the image
     try{
         const {content} = await createMowerLocation(location, mowerId)
-        console.log('created location', content)
+        console.log('created location obj', content)
 
         const image = {
             image: data.image,
@@ -228,7 +230,7 @@ async function createMowerImage(data, mowerId){
         }
         
         response.content = await mowersRepo.createMowerImage(image, content.id)
-        console.log('created image', content)
+        console.log('created image obj', content)
 
     } 
     catch(err) {
@@ -237,6 +239,29 @@ async function createMowerImage(data, mowerId){
         response.content = 'internal server error'
     }
     
+    return response
+}
+/**
+ * Fetches the mower, extracts direction from it and sends it back.
+ * @param {Int} mowerId 
+ */
+async function getMowerDirection(mowerId){
+    
+    const response = {}
+
+    try{
+        const { attributes } = await mowersRepo.getMowerById(mowerId)
+
+        // make sure we have a mower before extracting the direction
+        if(!attributes) response.status = 204
+        else{
+            response.status = 200
+            response.content = attributes.direction
+        }
+    }catch(err){
+        response.status = 500
+    }
+
     return response
 }
 
@@ -249,5 +274,6 @@ module.exports = {
     getMowerLocation,
     createMowerLocation,
     getMowerImages,
-    createMowerImage
+    createMowerImage,
+    getMowerDirection
 }
